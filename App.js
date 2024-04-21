@@ -1,20 +1,53 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { Pressable, Text } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import GetStarted from "./Screens/Get_Started";
+import LoginAs from "./Screens/Login_as";
+import AdminLogin from "./Screens/Admin_Login_Page";
+import StudentLogin from "./Screens/Student_Login_Page";
+import AdminHome from "./Screens/Admin_Home_page";
+import StudentHome from "./Screens/Student_Home_Page";
+import UpdateStatus from "./Screens/Update_Status";
+import EnterDetail from "./Screens/Enter_Details";
+import ClothDetails from "./Screens/Cloth_Detail";  
+
+
+
+const Stack = createNativeStackNavigator();
+
+export const AboutStack = () => {
+  return (
+    <Stack.Navigator
+      initialRouteName="GetStarted" // Set initialRouteName to "GetStarted"
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: "lightblue",
+        },
+        headerTintColor: "white",
+        headerTitleStyle: {
+          fontWeight: "bold",
+        },
+      }}
+    >
+      <Stack.Screen name="GetStarted" component={GetStarted} />
+      <Stack.Screen name="LoginAs" component={LoginAs} />
+      <Stack.Screen name="AdminLogin" component={AdminLogin} />
+      <Stack.Screen name="StudentLogin" component={StudentLogin} />
+      <Stack.Screen name="AdminHome" component={AdminHome} />
+      <Stack.Screen name="StudentHome" component={StudentHome} />
+      <Stack.Screen name="UpdateStatus" component={UpdateStatus} />
+      <Stack.Screen name="EnterDetail" component={EnterDetail} />
+      <Stack.Screen name="ClothDetails" component={ClothDetails} />
+      
+    </Stack.Navigator>
+  );
+};
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      {/* Render the AboutStack component */}
+      <AboutStack />
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
