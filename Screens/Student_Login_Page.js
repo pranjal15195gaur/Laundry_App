@@ -13,14 +13,19 @@ import {
 } from "react-native";
 
 const StudentLogin = ({ navigation }) => {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
 
   const validateForm = () => {
     let errors = {};
 
-    if (!username) errors.username = "Username is required";
+    // Email validation regex pattern
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!email || !emailPattern.test(email)) {
+      errors.email = "Enter a valid email address";
+    }
     if (!password) errors.password = "Password is required";
 
     setErrors(errors);
@@ -43,24 +48,25 @@ const StudentLogin = ({ navigation }) => {
       >
         <View style={styles.form}>
           <Image
-            source={require("../assets/adaptive-icon.png")}
+            source={require("../assets/login-logo.png")}
             style={{
-              width: 200,
-              height: 200,
+              width: 220,
+              height: 220,
               alignSelf: "center",
               marginBottom: 50,
             }}
           />
           <Text style={styles.head}>Student Login</Text>
-          <Text style={styles.label}>Username</Text>
+          <Text style={styles.label}>Email</Text>
           <TextInput
             style={styles.input}
-            placeholder="Enter your username"
-            value={username}
-            onChangeText={setUsername}
+            placeholder="Enter your email"
+            value={email}
+            onChangeText={setEmail}
+            keyboardType="email-address" // Set keyboard type to email address
           />
-          {errors.username ? (
-            <Text style={styles.errorText}>{errors.username}</Text>
+          {errors.email ? (
+            <Text style={styles.errorText}>{errors.email}</Text>
           ) : null}
 
           <Text style={styles.label}>Password</Text>

@@ -43,7 +43,7 @@ const AdminLogin = ({navigation}) => {
     >
       <View style={styles.form}>
         <Image
-          source={require("../assets/favicon.png")}
+          source={require("../assets/login-logo.png")}
           style={{
             width: 200,
             height: 200,

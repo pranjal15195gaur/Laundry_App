@@ -4,7 +4,7 @@ import { StyleSheet, Text, View, SafeAreaView, Pressable, Image } from 'react-na
 export default function GetStarted({ navigation }) {
   return (
     <SafeAreaView style={styles.container}>
-      <Image source={require('../assets/icon.png')} style={styles.image} />
+      <Image source={require('../assets/washing-machine.jpg')} style={styles.image} />
       <View>
         <Text style={styles.text}>Welcome to IIT GN</Text>
         <Text style={styles.text}>Laundry App</Text>
@@ -34,10 +34,10 @@ const styles = StyleSheet.create({
   },
   image: {
     width: 300,
-    height: 300,
+    height: 350,
   },
   button: {
-    backgroundColor: 'lightblue',
+    backgroundColor: 'skyblue',
     padding: 10,
     margin: 10,
     borderRadius: 25,

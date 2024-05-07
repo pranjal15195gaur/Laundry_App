@@ -4,17 +4,20 @@ import { StyleSheet, Text, View, SafeAreaView , Pressable} from 'react-native';
 export default function StudentHome({navigation}) {
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.info}> 🔔 Hi , Pranjal Gaur</Text>
+      <Text style={styles.info}> 🔔 Hi , Student's name</Text>
       <View style = {styles.option}>
         <StatusBar style="auto" />
         <Pressable style = {styles.button} onPress = {() => navigation.navigate("ClothDetails")}>
           <Text style = {styles.buttonText}>Get Laundry Status</Text>
         </Pressable>
-        <Pressable style = {styles.button} onPress = {() => alert('Complaint Portal will be opened')}>
+        <Pressable style = {styles.button} onPress = {() => navigation.navigate("Complaint_portal")}>
           <Text style = {styles.buttonText}>Complaint Portal</Text>
         </Pressable>
-        <Pressable style = {styles.button} onPress = {() => alert('FeedBack Portal will be opened')}>
+        <Pressable style = {styles.button} onPress = {() => navigation.navigate("Feedback_portal")}>
           <Text style = {styles.buttonText}>Feedback Portal</Text>
+        </Pressable>
+        <Pressable style = {styles.button} onPress = {() => navigation.navigate("Submit_laundry")}>
+          <Text style = {styles.buttonText}>Submit Laundry</Text>
         </Pressable>
       </View>
     </SafeAreaView>
