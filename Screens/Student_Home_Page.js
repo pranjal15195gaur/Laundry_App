@@ -1,10 +1,12 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, SafeAreaView , Pressable} from 'react-native';
 
-export default function StudentHome({navigation}) {
+
+export default function StudentHome({navigation, route}) {
+  const { studentName } = route.params;
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.info}> 🔔 Hi , Student's name</Text>
+      <Text style={styles.info}> 🔔 Hi , {studentName}</Text>
       <View style = {styles.option}>
         <StatusBar style="auto" />
         <Pressable style = {styles.button} onPress = {() => navigation.navigate("ClothDetails")}>

@@ -10,7 +10,7 @@ export default function AdminHome({navigation}) {
         <Pressable style = {styles.button} onPress = {() => navigation.navigate("UpdateStatus")}>
           <Text style = {styles.buttonText}>Update Status</Text>
         </Pressable>
-        <Pressable style = {styles.button} onPress = {() => navigation.navigate("EnterDetail")}>
+        <Pressable style = {styles.button} onPress = {() => navigation.navigate("Enter_Clothes_Details")}>
           <Text style = {styles.buttonText}>Enter the Cloth Details</Text>
         </Pressable>
       </View>

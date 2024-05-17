@@ -1,6 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
 import { StyleSheet, Text, View , TextInput , SafeAreaView,ScrollView ,Pressable} from 'react-native';
+import { useEffect } from 'react';
 
 export default function EnterDetail() {
   const [LaundryCode, setLaundryCode] = useState('');

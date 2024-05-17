@@ -11,34 +11,27 @@ import {
   ScrollView,
   Pressable,
 } from "react-native";
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { app } from '../firebase';
+
+const auth = getAuth(app);
 
 const StudentLogin = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
+  
 
-  const validateForm = () => {
-    let errors = {};
-
-    // Email validation regex pattern
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-    if (!email || !emailPattern.test(email)) {
-      errors.email = "Enter a valid email address";
-    }
-    if (!password) errors.password = "Password is required";
-
-    setErrors(errors);
-
-    return Object.keys(errors).length === 0;
-  };
-
-  const handleSubmit = () => {
-    if (validateForm()) {
-      navigation.navigate("StudentHome");
+  const handleSubmit = async () => {
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      console.log('Sign in success');
+      const studentName = email.split('@')[0];
+      navigation.navigate('StudentHome', { studentName: studentName });
+    } catch (error) {
+      console.error('Sign in error:', error.message);
     }
   };
-
   return (
     <ScrollView>
       <KeyboardAvoidingView
@@ -154,3 +147,4 @@ const styles = StyleSheet.create({
 });
 
 export default StudentLogin;
+
