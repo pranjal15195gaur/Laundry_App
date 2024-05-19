@@ -9,7 +9,7 @@ export default function StudentHome({navigation, route}) {
       <Text style={styles.info}> 🔔 Hi , {studentName}</Text>
       <View style = {styles.option}>
         <StatusBar style="auto" />
-        <Pressable style = {styles.button} onPress = {() => navigation.navigate("ClothDetails")}>
+        <Pressable style = {styles.button} onPress = {() => navigation.navigate("LaundryDetails")}>
           <Text style = {styles.buttonText}>Get Laundry Status</Text>
         </Pressable>
         <Pressable style = {styles.button} onPress = {() => navigation.navigate("Complaint_portal")}>

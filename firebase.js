@@ -1,6 +1,5 @@
 import {initializeApp} from 'firebase/app';
 
-
 const firebaseConfig = {
     apiKey: "AIzaSyD0Kq5KhGyBPvhkwuMxZ5Fam7KdMHHwwk0",
     authDomain: "laundry-app-ea776.firebaseapp.com",
@@ -11,5 +10,4 @@ const firebaseConfig = {
     measurementId: "G-HPLSVYVMV5",
     databaseURL: "https://laundry-app-ea776-default-rtdb.firebaseio.com/",
   };
-
   export const app = initializeApp(firebaseConfig)

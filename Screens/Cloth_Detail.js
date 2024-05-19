@@ -1,10 +1,10 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View , TextInput } from 'react-native';
 
-export default function ClothDetail(navigation) {
+export default function ClothDetail({ navigation }) {
   return (
     <View style={styles.container}>
-      <Text style={styles.info}> 🔔 Hi , Pranjal Gaur</Text>
+      <Text style={styles.info}> 🔔 Hi , student name</Text>
       <View style = {styles.datebox}>
         <Text style = {styles.datetext}> Date : </Text>
         <Text style = {styles.datetext}> 21/04/2024 </Text>
@@ -42,6 +42,7 @@ export default function ClothDetail(navigation) {
     </View>
   );
 }
+
 
 const styles = StyleSheet.create({
   container: {
