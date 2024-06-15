@@ -11,29 +11,27 @@ import {
   ScrollView,
   Pressable,
 } from "react-native";
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { app } from '../firebase';
+
+const auth = getAuth(app);
 
 const StudentLogin = ({ navigation }) => {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
+  
 
-  const validateForm = () => {
-    let errors = {};
-
-    if (!username) errors.username = "Username is required";
-    if (!password) errors.password = "Password is required";
-
-    setErrors(errors);
-
-    return Object.keys(errors).length === 0;
-  };
-
-  const handleSubmit = () => {
-    if (validateForm()) {
-      navigation.navigate("StudentHome");
+  const handleSubmit = async () => {
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      console.log('Sign in success');
+      const studentName = email.split('@')[0];
+      navigation.navigate('StudentHome', { studentName: studentName });
+    } catch (error) {
+      console.error('Sign in error:', error.message);
     }
   };
-
   return (
     <ScrollView>
       <KeyboardAvoidingView
@@ -43,24 +41,25 @@ const StudentLogin = ({ navigation }) => {
       >
         <View style={styles.form}>
           <Image
-            source={require("../assets/adaptive-icon.png")}
+            source={require("../assets/login-logo.png")}
             style={{
-              width: 200,
-              height: 200,
+              width: 220,
+              height: 220,
               alignSelf: "center",
               marginBottom: 50,
             }}
           />
           <Text style={styles.head}>Student Login</Text>
-          <Text style={styles.label}>Username</Text>
+          <Text style={styles.label}>Email</Text>
           <TextInput
             style={styles.input}
-            placeholder="Enter your username"
-            value={username}
-            onChangeText={setUsername}
+            placeholder="Enter your email"
+            value={email}
+            onChangeText={setEmail}
+            keyboardType="email-address" // Set keyboard type to email address
           />
-          {errors.username ? (
-            <Text style={styles.errorText}>{errors.username}</Text>
+          {errors.email ? (
+            <Text style={styles.errorText}>{errors.email}</Text>
           ) : null}
 
           <Text style={styles.label}>Password</Text>
@@ -148,3 +147,4 @@ const styles = StyleSheet.create({
 });
 
 export default StudentLogin;
+

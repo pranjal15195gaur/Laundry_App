@@ -1,16 +1,20 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { StyleSheet, Text, View , TextInput , SafeAreaView,ScrollView ,Pressable} from 'react-native';
+import { StyleSheet, Text, View, TextInput, SafeAreaView, ScrollView, Pressable } from 'react-native';
+import { app } from '../firebase';
+import { getFirestore, collection, addDoc } from 'firebase/firestore';
+
+const firestore = getFirestore(app);
 
 export default function EnterDetail() {
   const [LaundryCode, setLaundryCode] = useState('');
   const [Date, setDate] = useState('');
   const [errors, setErrors] = useState({});
-  const [Shirts, setShirts] = useState('');
-  const [Lower, setLower] = useState('');
-  const [Pants, setPants] = useState('');
-  const [Trousers, setTrousers] = useState('');
-  const [Others, setOthers] = useState('');
+  const [Clothes, setClothes] = useState('');
+  const [Hostel, setHostel] = useState('');
+  const [Name, setName] = useState('');
+  const [Rollnumber, setRollnumber] = useState('');
+  const [Email, setEmail] = useState('');
 
   const validate = () => {
     let errors = {};
@@ -27,24 +31,42 @@ export default function EnterDetail() {
 
   const handleSubmit = () => {
     if (validate()) {
-      alert('Details have been uploaded');
-      setLaundryCode('');
-      setDate('');
-      setShirts('');
-      setLower('');
-      setPants('');
-      setTrousers('');
-      setOthers('');
+      // Add details to Firestore
+      addDoc(collection(firestore, 'laundryDetails'), {
+        laundryCode: LaundryCode,
+        date: Date,
+        clothes: Clothes,
+        hostel: Hostel,
+        name: Name,
+        rollnumber: Rollnumber,
+        email: Email,
+        status: 'Laundry Picked'
+      })
+      .then(() => {
+        alert('Details have been uploaded');
+        // Clear the input fields after successful submission
+        setLaundryCode('');
+        setDate('');
+        setClothes('');
+        setHostel('');
+        setName('');
+        setRollnumber('');
+        setEmail('');
+      })
+      .catch(error => {
+        console.error('Error uploading details: ', error);
+        alert('Failed to upload details. Please try again.');
+      });
     }
-  }
+  };
 
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
-        <Text style ={styles.inputtext}>Enter the Laundry Details</Text>
+        <Text style={styles.inputtext}>Enter the Laundry Details</Text>
         <TextInput 
-          style = {styles.input} 
-          placeholder = 'Enter the Student Laundry number' 
+          style={styles.input} 
+          placeholder='Enter the Student Laundry number' 
           value={LaundryCode}
           onChangeText={setLaundryCode}
         />
@@ -52,8 +74,8 @@ export default function EnterDetail() {
           <Text style={styles.errorText}>{errors.LaundryCode}</Text>
         ) : null}
         <TextInput 
-          style = {styles.input} 
-          placeholder = 'Enter the Date'
+          style={styles.input} 
+          placeholder='Enter the Date (DD/MM/YYYY)'
           value={Date}
           onChangeText={setDate}
         />
@@ -61,57 +83,54 @@ export default function EnterDetail() {
           <Text style={styles.errorText}>{errors.Date}</Text>
         ) : null}
         
-        <View style = {styles.box}>
-          <Text style = {styles.headtext}>Enter the number of clothes </Text>
-          <View style = {styles.clothestype}>
-            <Text style = {styles.clothestext}>Shirts</Text>
+        <View style={styles.box}>
+          <View style={styles.clothestype}>
+            <Text style={styles.clothestext}>Number of clothes</Text>
             <TextInput 
-              style = {styles.clothesinput}  
-              placeholder = '0'
-              value={Shirts}
-              onChangeText={setShirts}
+              style={styles.clothesinput}  
+              placeholder='0'
+              value={Clothes}
+              onChangeText={setClothes}
+              keyboardType='numeric'
             />
           </View>
-          <View style = {styles.clothestype}>
-            <Text style = {styles.clothestext}>Lower</Text>
+          <View style={styles.clothestype}>
+            <Text style={styles.clothestext}>Hostel</Text>
             <TextInput 
-              style = {styles.clothesinput} 
-              placeholder = '0' 
-              value={Lower} 
-              onChangeText={setLower}
+              style={styles.clothesinput}
+              value={Hostel} 
+              onChangeText={setHostel}
             />
           </View>
-          <View style = {styles.clothestype}>
-            <Text style = {styles.clothestext}>Pants</Text>
+          <View style={styles.clothestype}>
+            <Text style={styles.clothestext}>Name</Text>
             <TextInput 
-              style = {styles.clothesinput} 
-              placeholder = '0' 
-              value={Pants}
-              onChangeText={setPants}
+              style={styles.clothesinput}
+              value={Name}
+              onChangeText={setName}
             />
           </View>
-          <View style = {styles.clothestype}>
-            <Text style = {styles.clothestext}>Trousers</Text>
+          <View style={styles.clothestype}>
+            <Text style={styles.clothestext}>Roll Number</Text>
             <TextInput 
-              style = {styles.clothesinput} 
-              placeholder = '0' 
-              value={Trousers}
-              onChangeText={setTrousers}
+              style={styles.clothesinput} 
+              value={Rollnumber}
+              onChangeText={setRollnumber}
+              keyboardType='numeric'
             />
           </View>
-          <View style = {styles.clothestype}>
-            <Text style = {styles.clothestext}>Others</Text>
+          <View style={styles.clothestype}>
+            <Text style={styles.clothestext}>Email</Text>
             <TextInput 
-              style = {styles.clothesinput} 
-              placeholder = '0' 
-              value={Others}  
-              onChangeText={setOthers}
+              style={styles.clothesinput}
+              value={Email}  
+              onChangeText={setEmail}
             />
           </View>
         </View>
 
-        <Pressable style = {styles.button} onPress ={handleSubmit}>
-          <Text style = {styles.buttonText}> Submit </Text>
+        <Pressable style={styles.button} onPress={handleSubmit}>
+          <Text style={styles.buttonText}> Submit </Text>
         </Pressable>
         <StatusBar style="auto" />
       </ScrollView>
@@ -131,9 +150,7 @@ const styles = StyleSheet.create({
     color: 'black',
     textAlign: 'center',
     marginBottom: 20,
-  
   },
-
   input: {
     height: 40,
     width: 300,

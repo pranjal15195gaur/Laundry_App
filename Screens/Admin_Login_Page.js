@@ -13,14 +13,14 @@ import {
 } from "react-native";
 
 const AdminLogin = ({navigation}) => {
-  const [username, setUsername] = useState("");
+  const [Email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
 
   const validateForm = () => {
     let errors = {};
 
-    if (!username) errors.username = "Username is required";
+    if (!Email) errors.Email = "Email is required";
     if (!password) errors.password = "Password is required";
 
     setErrors(errors);
@@ -30,9 +30,16 @@ const AdminLogin = ({navigation}) => {
 
   const handleSubmit = () => {
     if (validateForm()) {
-      navigation.navigate("AdminHome");
+      if (Email === "admin@gmail.com" && password === "adminiitgn") {
+        navigation.navigate("AdminHome");
+        console.log('Admin Login Successfully');
+      } else {
+        setErrors({ ...errors, login: "Invalid email or password" });
+        console.log('Invalid Credentials');
+      }
     }
   };
+  
 
   return (
     <ScrollView >
@@ -43,7 +50,7 @@ const AdminLogin = ({navigation}) => {
     >
       <View style={styles.form}>
         <Image
-          source={require("../assets/favicon.png")}
+          source={require("../assets/login-logo.png")}
           style={{
             width: 200,
             height: 200,
@@ -52,15 +59,15 @@ const AdminLogin = ({navigation}) => {
           }}
         />
         <Text style={styles.head}>Admin Login</Text>
-        <Text style={styles.label}>Username</Text>
+        <Text style={styles.label}>Email</Text>
         <TextInput
           style={styles.input}
-          placeholder="Enter your username"
-          value={username}
-          onChangeText={setUsername}
+          placeholder="Enter your Email ID"
+          value={Email}
+          onChangeText={setEmail}
         />
-        {errors.username ? (
-          <Text style={styles.errorText}>{errors.username}</Text>
+        {errors.Email ? (
+          <Text style={styles.errorText}>{errors.Email}</Text>
         ) : null}
 
         <Text style={styles.label}>Password</Text>

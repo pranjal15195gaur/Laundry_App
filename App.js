@@ -9,8 +9,14 @@ import AdminHome from "./Screens/Admin_Home_page";
 import StudentHome from "./Screens/Student_Home_Page";
 import UpdateStatus from "./Screens/Update_Status";
 import EnterDetail from "./Screens/Enter_Details";
-import ClothDetails from "./Screens/Cloth_Detail";  
+import ClothDetails from "./Screens/Cloth_Detail";
+import Complaint_portal from "./Screens/Complaint_portal";
+import Feedback_portal from "./Screens/Feedback_portal";
+import Submit_laundry from "./Screens/Submit_laundry";
+import Enter_Clothes_Details from "./Screens/Enter_Clothes_Details";
+import LaundryDetails from "./Screens/LaundryDetails";
 
+import { AppRegistry } from "react-native";
 
 
 const Stack = createNativeStackNavigator();
@@ -38,6 +44,11 @@ export const AboutStack = () => {
       <Stack.Screen name="UpdateStatus" component={UpdateStatus} />
       <Stack.Screen name="EnterDetail" component={EnterDetail} />
       <Stack.Screen name="ClothDetails" component={ClothDetails} />
+      <Stack.Screen name="Complaint_portal" component={Complaint_portal} />
+      <Stack.Screen name="Feedback_portal" component={Feedback_portal} />
+      <Stack.Screen name="Submit_laundry" component={Submit_laundry} />
+      <Stack.Screen name="Enter_Clothes_Details" component={Enter_Clothes_Details} />
+      <Stack.Screen name="LaundryDetails" component={LaundryDetails} />
       
     </Stack.Navigator>
   );
