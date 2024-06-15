@@ -18,6 +18,7 @@ import LaundryDetails from "./Screens/LaundryDetails";
 
 import { AppRegistry } from "react-native";
 
+
 const Stack = createNativeStackNavigator();
 
 export const AboutStack = () => {

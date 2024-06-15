@@ -48,6 +48,10 @@ const LaundryDetails = () => {
           <Text style={styles.label}>Email:</Text>
           <Text>{item.email}</Text>
         </View>
+        <View style={styles.row}>
+          <Text style={styles.label}>Status:</Text>
+          <Text>{item.status}</Text>
+        </View>
       </View>
     );
   

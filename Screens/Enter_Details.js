@@ -1,8 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View , TextInput , SafeAreaView,ScrollView ,Pressable} from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, Text, View, TextInput, SafeAreaView, ScrollView, Pressable } from 'react-native';
 import { app } from '../firebase';
-import {getFirestore, collection, addDoc} from 'firebase/firestore';
+import { getFirestore, collection, addDoc } from 'firebase/firestore';
 
 const firestore = getFirestore(app);
 
@@ -40,6 +40,7 @@ export default function EnterDetail() {
         name: Name,
         rollnumber: Rollnumber,
         email: Email,
+        status: 'Laundry Picked'
       })
       .then(() => {
         alert('Details have been uploaded');
@@ -62,10 +63,10 @@ export default function EnterDetail() {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
-        <Text style ={styles.inputtext}>Enter the Laundry Details</Text>
+        <Text style={styles.inputtext}>Enter the Laundry Details</Text>
         <TextInput 
-          style = {styles.input} 
-          placeholder = 'Enter the Student Laundry number' 
+          style={styles.input} 
+          placeholder='Enter the Student Laundry number' 
           value={LaundryCode}
           onChangeText={setLaundryCode}
         />
@@ -73,8 +74,8 @@ export default function EnterDetail() {
           <Text style={styles.errorText}>{errors.LaundryCode}</Text>
         ) : null}
         <TextInput 
-          style = {styles.input} 
-          placeholder = 'Enter the Date (DD/MM/YYYY)'
+          style={styles.input} 
+          placeholder='Enter the Date (DD/MM/YYYY)'
           value={Date}
           onChangeText={setDate}
         />
@@ -82,61 +83,60 @@ export default function EnterDetail() {
           <Text style={styles.errorText}>{errors.Date}</Text>
         ) : null}
         
-        <View style = {styles.box}>
-          <View style = {styles.clothestype}>
-            <Text style = {styles.clothestext}>Number of clothes</Text>
+        <View style={styles.box}>
+          <View style={styles.clothestype}>
+            <Text style={styles.clothestext}>Number of clothes</Text>
             <TextInput 
-              style = {styles.clothesinput}  
-              placeholder = '0'
+              style={styles.clothesinput}  
+              placeholder='0'
               value={Clothes}
               onChangeText={setClothes}
               keyboardType='numeric'
             />
           </View>
-          <View style = {styles.clothestype}>
-            <Text style = {styles.clothestext}>Hostel</Text>
+          <View style={styles.clothestype}>
+            <Text style={styles.clothestext}>Hostel</Text>
             <TextInput 
-              style = {styles.clothesinput}
+              style={styles.clothesinput}
               value={Hostel} 
               onChangeText={setHostel}
             />
           </View>
-          <View style = {styles.clothestype}>
-            <Text style = {styles.clothestext}>Name</Text>
+          <View style={styles.clothestype}>
+            <Text style={styles.clothestext}>Name</Text>
             <TextInput 
-              style = {styles.clothesinput}
+              style={styles.clothesinput}
               value={Name}
               onChangeText={setName}
             />
           </View>
-          <View style = {styles.clothestype}>
-            <Text style = {styles.clothestext}>Roll Number</Text>
+          <View style={styles.clothestype}>
+            <Text style={styles.clothestext}>Roll Number</Text>
             <TextInput 
-              style = {styles.clothesinput} 
+              style={styles.clothesinput} 
               value={Rollnumber}
               onChangeText={setRollnumber}
               keyboardType='numeric'
             />
           </View>
-          <View style = {styles.clothestype}>
-            <Text style = {styles.clothestext}>Email</Text>
+          <View style={styles.clothestype}>
+            <Text style={styles.clothestext}>Email</Text>
             <TextInput 
-              style = {styles.clothesinput}
+              style={styles.clothesinput}
               value={Email}  
               onChangeText={setEmail}
             />
           </View>
         </View>
 
-        <Pressable style = {styles.button} onPress ={handleSubmit}>
-          <Text style = {styles.buttonText}> Submit </Text>
+        <Pressable style={styles.button} onPress={handleSubmit}>
+          <Text style={styles.buttonText}> Submit </Text>
         </Pressable>
         <StatusBar style="auto" />
       </ScrollView>
     </SafeAreaView>
   );
 }
-
 
 const styles = StyleSheet.create({
   container: {
@@ -150,9 +150,7 @@ const styles = StyleSheet.create({
     color: 'black',
     textAlign: 'center',
     marginBottom: 20,
-  
   },
-
   input: {
     height: 40,
     width: 300,

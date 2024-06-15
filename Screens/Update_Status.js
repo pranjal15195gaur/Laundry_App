@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, ScrollView, Pressable, TextInput, StyleSheet } from "react-native";
-import { getFirestore, collection, getDocs } from 'firebase/firestore';
+import { getFirestore, collection, getDocs, updateDoc, query, where, doc } from 'firebase/firestore';
 import { app } from "../firebase";
 
 const UpdateStatus = () => {
@@ -15,7 +15,7 @@ const UpdateStatus = () => {
         const querySnapshot = await getDocs(laundryDetailsRef);
         const data = [];
         querySnapshot.forEach(doc => {
-          data.push(doc.data());
+          data.push({ ...doc.data(), id: doc.id });
         });
         setLaundryData(data);
       } catch (error) {
@@ -31,7 +31,7 @@ const UpdateStatus = () => {
       console.error('Search date is empty');
       return;
     }
-  
+
     const formattedSearchDate = searchDate.split('/').reverse().join('-'); 
     const filteredData = laundryData.filter(item => {
       if (!item.date) {
@@ -43,8 +43,21 @@ const UpdateStatus = () => {
     });
     setLaundryData(filteredData);
   };
-  
-  
+
+  const handleUpdateStatus = async (id) => {
+    try {
+      const firestore = getFirestore(app);
+      const laundryDocRef = doc(firestore, 'laundryDetails', id);
+      await updateDoc(laundryDocRef, {
+        status: 'Ready for Pickup'
+      });
+      alert('Status updated successfully');
+      setLaundryData(prevData => prevData.map(item => item.id === id ? { ...item, status: 'Ready for Pickup' } : item));
+    } catch (error) {
+      console.error('Error updating status:', error);
+      alert('Failed to update status. Please try again.');
+    }
+  };
 
   return (
     <ScrollView style={styles.container}>
@@ -65,6 +78,8 @@ const UpdateStatus = () => {
           <Text style={styles.dataTextHeading}>Name</Text>
           <Text style={styles.dataTextHeading}>Laundry ID</Text>
           <Text style={styles.dataTextHeading}>No of Clothes</Text>
+          <Text style={styles.dataTextHeading}>Status</Text>
+          <Text style={styles.dataTextHeading}>Update Status</Text>
         </View>
         {laundryData.map((item, index) => (
           <View style={styles.data} key={index}>
@@ -72,6 +87,10 @@ const UpdateStatus = () => {
             <Text style={styles.datatext}>{item.name}</Text>
             <Text style={styles.datatext}>{item.laundryCode}</Text>
             <Text style={styles.datatext}>{item.clothes}</Text>
+            <Text style={styles.datatext}>{item.status}</Text>
+            <Pressable style={styles.updateButton} onPress={() => handleUpdateStatus(item.id)}>
+              <Text style={styles.updateButtonText}>Mark as Ready</Text>
+            </Pressable>
           </View>
         ))}
       </View>
@@ -146,6 +165,17 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "black",
     textAlign: "center",
+  },
+  updateButton: {
+    backgroundColor: "lightgreen",
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    borderRadius: 10,
+  },
+  updateButtonText: {
+    color: "black",
+    fontSize: 14,
+    fontWeight: "bold",
   },
 });
 
